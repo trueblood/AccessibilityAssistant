@@ -30,3 +30,7 @@ class DatabaseHelper():
         for item in item_details:
            value = jh.JsonHelper.parse_json(item)
         return value
+    
+    def dropDatabaseTable():
+        value = collection_name.drop()
+        return value

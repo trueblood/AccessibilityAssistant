@@ -1,9 +1,6 @@
 #!pip3 install -r requirements.txt
 import src.scrapwebpage as sw
 import src.jsonhelper as jh
-import os
-import json
-import requests
 import src.machinelearning as ml
 import src.databasehelper as db
 from transformers import pipeline
@@ -64,11 +61,13 @@ def onPostIndex():
 @app.route('/question/<website>', methods=['GET'])
 def question(website):
     url = getFormattedURL(website)
-    #sw.ScrapWebPage.scrap_web_page_title(url)
-    #sw.ScrapWebPage.scrap_web_page_paragraph(url)
-    #sw.ScrapWebPage.scrap_web_page_header(url)
-    #sw.ScrapWebPage.scrap_web_page_link(url)
-    #sw.ScrapWebPage.scrap_web_page_source(url)
+    drpSuccessful =  db.DatabaseHelper.dropDatabaseTable()
+    if drpSuccessful == True:
+        sw.ScrapWebPage.scrap_web_page_title(url)
+        sw.ScrapWebPage.scrap_web_page_paragraph(url)
+        sw.ScrapWebPage.scrap_web_page_header(url)
+        sw.ScrapWebPage.scrap_web_page_link(url)
+        sw.ScrapWebPage.scrap_web_page_source(url)
     form = QuestionForm()
     return render_template('question.html', form=form, website=url)
 
@@ -107,8 +106,7 @@ def OnPostQuestion(website):
                 sourceQuestion = "what is the source"
                 context = db.DatabaseHelper.findDataByQuestion_Cleaned(sourceQuestion, url)
                 data.append({'question' : jsonData['question'], 'context' : context, 'answers' : jsonData['cleaned']})
-                text = data
-                #text = ml.MachineLearning.run_machine_learning_tuned_model(context, originalQuestion, data)
+                text = ml.MachineLearning.run_machine_learning_tuned_model(context, originalQuestion, data)
         elif firstWord == "read":
             url = getFormattedURL(originalwebsite)
             value = db.DatabaseHelper.findDataByQuestion_Cleaned(originalQuestion, url)
