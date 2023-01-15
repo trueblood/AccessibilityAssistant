@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Accessibility Assistant{% endblock %}
+{% block content %}
+<script type="text/javascript">
+    
+       function playWelcomeAudio() {
+            speechSynthesis.speak(new SpeechSynthesisUtterance("Hello, this is your browser speaking. What website would you like to surf?"));
+        
+        }
+    function speechToText() {
+        try {
+            var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            var recognition = new SpeechRecognition();
+        }
+        catch (e) {
+            console.error(e);
+            $('.no-browser-support').show();
+            $('.app').hide();
+        }
+    }
+    const GetSpeech = () => {
+        playWelcomeAudio(); 
+        console.log("clicked microphone");
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+        let recognition = new SpeechRecognition();
+
+        recognition.onstart = () => {
+            console.log("starting listening, speak in microphone");
+        }
+        recognition.onspeechend = () => {
+            console.log("stopped listening");
+            recognition.stop();
+        }
+        recognition.onresult = (result) => {
+            console.log(result.results[0][0].transcript);
+            document.getElementById("website").value = result.results[0][0].transcript;
+           document.getElementById("submit").click();
+        }
+
+        recognition.start();
+    }
+
+</script>
+
+<div class="container">
+<div class="page-header">
+    <div class="row">
+        <div class = "col-md-12">
+            <div style="text-align: center;">
+                <button onClick="GetSpeech()"><i class="fa-solid fa-microphone fa-10x"></i> </button>
+            </div>
+    </div>
+    </div>
+
+    
+       <!-- <button onclick="playWelcomeAudio()">Welcome Info</button> -->
+    <!--<h1>Hello, stranger</h1>-->
+
+    <div class="row">
+        <div class="col-md-12">
+            {{ wtf.quick_form(form)}}
+        </div>
+    </div>
+    
+
+</div>
+</div>
+{% endblock %}

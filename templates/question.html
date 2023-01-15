@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% block content %}
+<html>
+
+<head>
+    <title>User</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        let TEXTSPEECH = "text";
+        const GetSpeech = () => {
+            console.log("clicked microphone");
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+            let recognition = new SpeechRecognition();
+
+            recognition.onstart = () => {
+                console.log("starting listening, speak in microphone");
+            }
+            recognition.onspeechend = () => {
+                console.log("stopped listening");
+                recognition.stop();
+            }
+            recognition.onresult = (result) => {
+                console.log(result.results[0][0].transcript);
+                document.getElementById("question").value = result.results[0][0].transcript;
+                document.getElementById("submit").click();
+            }
+
+            recognition.start();
+        }
+        const speak = () => {
+            var msg = new SpeechSynthesisUtterance(TEXTSPEECH);
+            window.speechSynthesis.speak(msg);
+        }
+
+        $( document ).ready(function() {
+            let text = $('#pText').text();
+            TEXTSPEECH = text;
+            document.getElementById('playAudio').onclick = function() { speak() };
+            console.log(text);
+        });
+    </script>
+</head>
+
+<body>
+    <br />
+    <div class="container">
+        <br />
+        <div class="row">
+            <div class="col-md-12">
+                <div style="text-align: center;">
+
+                    <button onClick="GetSpeech()"><i class="fa-solid fa-microphone fa-10x"></i> </button>
+                    <button id="playAudio" onclick="speak('This is the text')"><i class="fa-solid fa-play fa-10x"></i></button>
+            
+                    </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                {{ wtf.quick_form(form)}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Key</h2>
+                <ul>
+                    <li>what is the summary of paragraph 0</li>
+                    <li>read paragraph 0</li>
+                </ul>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <p id="pQuestion">Question is: {{ question }}</p>
+            </div>
+            <div class="col-md-6">
+                <p id="pText">Text is: {{ text }}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                context is: {{ context }}
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-md-12">
+                <iframe style="width: 100%; height: 600px; border:3px solid black;" src={{ website }} title="description"></iframe>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+{% endblock %}
