@@ -4,6 +4,7 @@ import src.jsonhelper as jh
 import src.machinelearning as ml
 import src.databasehelper as db
 import src.questionhelper as q
+import os
 from transformers import pipeline
 from flask import Flask, render_template, redirect, url_for
 from flask_bootstrap import Bootstrap
