@@ -85,15 +85,10 @@ def OnPostQuestion(website):
         splitString = originalQuestion.split(" ")
         lengthOfList = len(splitString)
         firstWord = splitString[0] #what
-        # if question starts with what is the summary
-        # if first word is what then we know we are looking for the machine learning
-        # or read paragraph 0 then do the code accordingly   
         if firstWord == "what":
             hasNumbers = has_numbers(originalQuestion)
             lastWord = splitString[lengthOfList-2] + " " + splitString[lengthOfList-1]
             question = "read" + " " + lastWord
-            #questions = []
-            #questions.append(question)
             if hasNumbers:
                 url = getFormattedURL(originalwebsite)
                 value = db.DatabaseHelper.findDataByQuestion_Cleaned(question, url)
