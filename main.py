@@ -64,9 +64,9 @@ def question(website):
     drpSuccessful =  db.DatabaseHelper.dropDatabaseTable()
     if drpSuccessful == True:
         sw.ScrapWebPage.scrap_web_page_title(url)
-        sw.ScrapWebPage.scrap_web_page_paragraph(url)
-        sw.ScrapWebPage.scrap_web_page_header(url)
-        sw.ScrapWebPage.scrap_web_page_link(url)
+        #sw.ScrapWebPage.scrap_web_page_paragraph(url)
+        #sw.ScrapWebPage.scrap_web_page_header(url)
+        #sw.ScrapWebPage.scrap_web_page_link(url)
         sw.ScrapWebPage.scrap_web_page_source(url)
     form = QuestionForm()
     return render_template('question.html', form=form, website=url)
@@ -102,11 +102,12 @@ def OnPostQuestion(website):
                 url = getFormattedURL(originalwebsite)
                 value = db.DatabaseHelper.findDataByQuestion_Json(originalQuestion, url)
                 jsonData = value
+                text = jsonData
                 data = []
                 sourceQuestion = "what is the source"
-                context = db.DatabaseHelper.findDataByQuestion_Cleaned(sourceQuestion, url)
-                data.append({'question' : jsonData['question'], 'context' : context, 'answers' : jsonData['cleaned']})
-                text = ml.MachineLearning.run_machine_learning_tuned_model(context, originalQuestion, data)
+                context = db.DatabaseHelper.findDataByQuestion_Json(sourceQuestion, url)
+                data.append({'question' : jsonData['question'], 'context' : context['element'], 'answers' : jsonData['cleaned']})
+                text = ml.MachineLearning.run_machine_learning_tuned_model(context['element'], originalQuestion, data)
         elif firstWord == "read":
             url = getFormattedURL(originalwebsite)
             value = db.DatabaseHelper.findDataByQuestion_Cleaned(originalQuestion, url)

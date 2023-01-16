@@ -33,4 +33,4 @@ class DatabaseHelper():
     
     def dropDatabaseTable():
         value = collection_name.drop()
-        return value
+        return True

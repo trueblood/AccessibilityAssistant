@@ -75,6 +75,6 @@ class ScrapWebPage():
                 output += '{} '.format(t)
         formatted = output.replace('"', '')
         formattedagain = formatted.replace("\n", "")
-        db.DatabaseHelper.writeToDatabase(str(uuid.uuid4()), webpage, "0", formattedagain, 'source', question)
+        db.DatabaseHelper.writeToDatabase(str(uuid.uuid4()), webpage, soup, formattedagain, 'source', question)
 
 
