@@ -62,13 +62,13 @@ def onPostIndex():
 @app.route('/question/<website>', methods=['GET'])
 def question(website):
     url = getFormattedURL(website)
-    drpSuccessful =  db.DatabaseHelper.dropDatabaseTable()
-    if drpSuccessful == True:
-        sw.ScrapWebPage.scrap_web_page_title(url)
-        sw.ScrapWebPage.scrap_web_page_paragraph(url)
-        sw.ScrapWebPage.scrap_web_page_header(url)
-        sw.ScrapWebPage.scrap_web_page_link(url)
-        sw.ScrapWebPage.scrap_web_page_source(url)
+    #drpSuccessful =  db.DatabaseHelper.dropDatabaseTable()
+    #if drpSuccessful == True:
+      #  sw.ScrapWebPage.scrap_web_page_title(url)
+     #   sw.ScrapWebPage.scrap_web_page_paragraph(url)
+      #  sw.ScrapWebPage.scrap_web_page_header(url)
+      #  sw.ScrapWebPage.scrap_web_page_link(url)
+      #  sw.ScrapWebPage.scrap_web_page_source(url)
     form = QuestionForm()
     return render_template('question.html', form=form, website=url)
 
