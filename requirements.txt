@@ -10,3 +10,4 @@ pandas==1.5.2
 pymongo==4.3.3
 datasets==2.8.0
 txtai==5.2.0
+inflect==6.0.2

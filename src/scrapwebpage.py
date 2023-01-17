@@ -2,6 +2,7 @@ import requests
 import src.databasehelper as db
 from bs4 import BeautifulSoup
 import uuid
+import inflect
 
 class ScrapWebPage():
     
@@ -11,9 +12,10 @@ class ScrapWebPage():
         html = resp.text
         soup = BeautifulSoup(html, 'lxml')
         rows = soup.find_all('p')
-        id = 0
+        id = 1
+        p = inflect.engine()
         for row in rows:
-            question = 'read paragraph ' + str(id)
+            question = 'read paragraph ' + p.number_to_words(id) 
             db.DatabaseHelper.writeToDatabase(str(uuid.uuid4()), webpage, row, row.text, 'paragraph', question)
             id += 1 
 
