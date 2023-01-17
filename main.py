@@ -1,4 +1,3 @@
-#!pip3 install -r requirements.txt
 import src.scrapwebpage as sw
 import src.jsonhelper as jh
 import src.machinelearning as ml
@@ -18,7 +17,7 @@ class SurfForm(FlaskForm):
     submit = SubmitField('Submit')
 class QuestionForm(FlaskForm):
     question = StringField('What question would you like to ask?', validators=[DataRequired()])
-    website = 'https://copyleft.org/'
+    website = ''
     submit = SubmitField('Submit')
     text = "test"
 
