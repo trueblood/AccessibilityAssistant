@@ -65,13 +65,13 @@ def onPostIndex():
 @app.route('/question/<website>', methods=['GET'])
 def question(website):
     url = getFormattedURL(website)
-    #drpSuccessful =  db.DatabaseHelper.dropDatabaseTable()
-    #if drpSuccessful == True:
-    #    sw.ScrapWebPage.scrap_web_page_title(url)
-    #    sw.ScrapWebPage.scrap_web_page_paragraph(url)
-    #   sw.ScrapWebPage.scrap_web_page_header(url)
-     #   sw.ScrapWebPage.scrap_web_page_link(url)
-     #   sw.ScrapWebPage.scrap_web_page_source(url)
+    drpSuccessful =  db.DatabaseHelper.dropDatabaseTable()
+    if drpSuccessful == True:
+        sw.ScrapWebPage.scrap_web_page_title(url)
+        sw.ScrapWebPage.scrap_web_page_paragraph(url)
+        sw.ScrapWebPage.scrap_web_page_header(url)
+        sw.ScrapWebPage.scrap_web_page_link(url)
+        sw.ScrapWebPage.scrap_web_page_source(url)
     form = QuestionForm()
     return render_template('question.html', form=form, website=url)
 
@@ -92,12 +92,12 @@ def OnPostQuestion(website):
                 url = getFormattedURL(originalwebsite)
                 question = "read the article"
                 value = db.DatabaseHelper.findDataByQuestion_Cleaned(question, url)
-                #ext = ml.MachineLearning.summarize_text(value)
+                text = ml.MachineLearning.summarize_text(value)
             else:
                 question = "read paragraph " + str(splitString[2])
                 url = getFormattedURL(originalwebsite)
                 value = db.DatabaseHelper.findDataByQuestion_Cleaned(question, url)
-                text = ml.MachineLearning.summarize_text(value)
+                text = ml.MachineLearning.summarize_paragraph(value)
         elif firstWord == "read":
             if "article" in splitString: 
                 url = getFormattedURL(originalwebsite)
@@ -119,8 +119,28 @@ def OnPostQuestion(website):
                 url = getFormattedURL(originalwebsite)
                 value = db.DatabaseHelper.findDataByQuestion_Cleaned(question, url)
                 text = ml.MachineLearning.entity_recognition(value)
-        
-                
+        elif firstWord == "what":
+            if "article" in splitString: 
+                questionInList = q.QuestionHelper.checkIfQuestionIsInList(originalQuestion)
+                if questionInList == True:
+                    url = getFormattedURL(originalwebsite)
+                    value = db.DatabaseHelper.findDataByQuestion_Json(originalQuestion, url)
+                    jsonData = value
+                    data = []
+                    sourceQuestion = "read the article"
+                    context = db.DatabaseHelper.findDataByQuestion_Json(sourceQuestion, url)
+                    data.append({'question' : jsonData['question'], 'context' : context['element'], 'answers' : jsonData['cleaned']})
+                    text = ml.MachineLearning.question_answering__tuned_model(context['element'], originalQuestion, data)
+                else:
+                    url = getFormattedURL(originalwebsite)
+                    sourceQuestion = "read the article"
+                    context = db.DatabaseHelper.findDataByQuestion_Cleaned(sourceQuestion, url)
+                    text = ml.MachineLearning.question_answering(context, originalQuestion)
+            else:
+                text = "None, see key"
+        else:
+            text = "None, see key"
+
 
 
       
