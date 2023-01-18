@@ -34,9 +34,10 @@ class ScrapWebPage():
         html = resp.text
         soup = BeautifulSoup(html, 'lxml')
         rows = soup.find_all('h2')
-        id = 0
+        id = 1
+        p = inflect.engine()
         for row in rows:
-            question = 'read header ' + str(id)
+            question = 'read header ' + p.number_to_words(id) 
             db.DatabaseHelper.writeToDatabase(str(uuid.uuid4()), webpage, row, row.text, 'header', question)
             id += 1 
 
@@ -46,9 +47,10 @@ class ScrapWebPage():
         html = resp.text
         soup = BeautifulSoup(html, 'lxml')
         rows = soup.find_all('a')
-        id = 0
+        id = 1
+        p = inflect.engine()
         for row in rows:
-            question = 'read link ' + str(id)
+            question = 'read link ' + p.number_to_words(id) 
             db.DatabaseHelper.writeToDatabase(str(uuid.uuid4()), webpage, row, row.text, 'link', question)
             id += 1 
 
@@ -58,7 +60,7 @@ class ScrapWebPage():
         html = resp.text
         soup = BeautifulSoup(html, 'lxml')
         text = soup.find_all(text=True)
-        question = 'what is the source'
+        question = 'read the article'
         output = ''
         blacklist = [
             '[document]',

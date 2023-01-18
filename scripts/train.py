@@ -5,4 +5,4 @@ ds = load_dataset("squad")
 
 trainer = HFTrainer()
 
-trainer("distilbert-base-cased-distilled-squad", ds["train"].select(range(3000)), task="question-answering", output_dir="distilbert-base-cased-distilled-squad")
+trainer("distilbert-base-uncased", ds["train"].select(range(3000)), task="question-answering", output_dir="distilbert-base-uncased")

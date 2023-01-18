@@ -4,11 +4,27 @@
 {% block title %}Accessibility Assistant{% endblock %}
 {% block content %}
 <script type="text/javascript">
-    
-       function playWelcomeAudio() {
-            speechSynthesis.speak(new SpeechSynthesisUtterance("Hello, this is your browser speaking. What website would you like to surf?"));
-        
-        }
+
+    $(document).ready(function () {
+        console.log("ready!");
+        document.onkeyup = function (e) {
+            if (e.which == 77) {
+                alert("M key was pressed");
+            } else if (e.ctrlKey && e.which == 66) {
+                alert("Ctrl + B shortcut combination was pressed");
+            } else if (e.ctrlKey && e.altKey && e.which == 89) {
+                alert("Ctrl + Alt + Y shortcut combination was pressed");
+            } else if (e.ctrlKey && e.altKey && e.shiftKey && e.which == 85) {
+                alert("Ctrl + Alt + Shift + U shortcut combination was pressed");
+            }
+        };
+    });
+
+
+    function playWelcomeAudio() {
+        speechSynthesis.speak(new SpeechSynthesisUtterance("Hello, this is your browser speaking. What website would you like to surf?"));
+
+    }
     function speechToText() {
         try {
             var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -21,7 +37,7 @@
         }
     }
     const GetSpeech = () => {
-        playWelcomeAudio(); 
+        playWelcomeAudio();
         console.log("clicked microphone");
         const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
@@ -37,7 +53,7 @@
         recognition.onresult = (result) => {
             console.log(result.results[0][0].transcript);
             document.getElementById("website").value = result.results[0][0].transcript;
-           document.getElementById("submit").click();
+            document.getElementById("submit").click();
         }
 
         recognition.start();
@@ -46,21 +62,21 @@
 </script>
 
 <div class="container">
-<div class="page-header">
-    <div class="row">
-        <div class = "col-md-12">
-            <div style="text-align: center;">
-                <button onClick="GetSpeech()"><i class="fa-solid fa-microphone fa-10x"></i> </button>
+    <div class="page-header">
+        <div class="row">
+            <div class="col-md-12">
+                <div style="text-align: center;">
+                    <button onClick="GetSpeech()"><i class="fa-solid fa-microphone fa-10x"></i> </button>
+                </div>
             </div>
-    </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            {{ wtf.quick_form(form)}}
         </div>
-    </div>
-    
+        <div class="row">
+            <div class="col-md-12">
+                {{ wtf.quick_form(form)}}
+            </div>
+        </div>
 
-</div>
+
+    </div>
 </div>
 {% endblock %}
