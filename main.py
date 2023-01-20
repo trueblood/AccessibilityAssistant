@@ -4,8 +4,6 @@ import src.machinelearning as ml
 import src.databasehelper as db
 import src.questionhelper as q
 import os
-import test as sum
-import testagain as sum2
 
 from transformers import pipeline
 from flask import Flask, render_template, redirect, url_for
@@ -65,13 +63,13 @@ def onPostIndex():
 @app.route('/question/<website>', methods=['GET'])
 def question(website):
     url = getFormattedURL(website)
-    drpSuccessful =  db.DatabaseHelper.dropDatabaseTable()
-    if drpSuccessful == True:
-        sw.ScrapWebPage.scrap_web_page_title(url)
-        sw.ScrapWebPage.scrap_web_page_paragraph(url)
-        sw.ScrapWebPage.scrap_web_page_header(url)
-        sw.ScrapWebPage.scrap_web_page_link(url)
-        sw.ScrapWebPage.scrap_web_page_source(url)
+   # drpSuccessful =  db.DatabaseHelper.dropDatabaseTable()
+   # if drpSuccessful == True:
+   #     sw.ScrapWebPage.scrap_web_page_title(url)
+   #     sw.ScrapWebPage.scrap_web_page_paragraph(url)
+   #     sw.ScrapWebPage.scrap_web_page_header(url)
+   #     sw.ScrapWebPage.scrap_web_page_link(url)
+   #     sw.ScrapWebPage.scrap_web_page_source(url)
     form = QuestionForm()
     return render_template('question.html', form=form, website=url)
 
@@ -92,7 +90,7 @@ def OnPostQuestion(website):
                 url = getFormattedURL(originalwebsite)
                 question = "read the article"
                 value = db.DatabaseHelper.findDataByQuestion_Cleaned(question, url)
-                text = ml.MachineLearning.summarize_text(value)
+                #text = ml.MachineLearning.summarize_text(value)
             else:
                 question = "read paragraph " + str(splitString[2])
                 url = getFormattedURL(originalwebsite)
@@ -147,6 +145,5 @@ def OnPostQuestion(website):
 
     
     return render_template('question.html', form=form, website=website, question=question, text=text)
-#if __name__=="__
-# main__":
-#  app.run(host="127.0.0.1", port=int(os.environ['CDSW_APP_PORT']))
+#if __name__=="__main__":
+ # app.run(host="127.0.0.1", port=int(os.environ['CDSW_APP_PORT']))

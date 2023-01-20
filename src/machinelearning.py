@@ -8,14 +8,14 @@ from transformers import pipeline
 
 
 class MachineLearning:
-    def run_machine_learning(context, question):
-        #questions = pipeline("question-answering", model="distilbert-base-uncased")
-        questions = pipeline("question-answering", model="ml6team/distilbart-tos-summarizer-tosdr")
+    def question_answering(context, question):
+        questions = pipeline("question-answering", model="distilbert-base-uncased")
+        #questions = pipeline("question-answering", model="ml6team/distilbart-tos-summarizer-tosdr")
         result =questions(question, context)
         return result.get('answer')
 
 
-    def run_machine_learning_tuned_model(context, question, data):
+    def question_answering__tuned_model(context, question, data):
         trainer = HFTrainer() 
         model, tokenizer = trainer("distilbert-base-uncased", data, task="question-answering")
         questions = pipeline("question-answering", model="distilbert-base-uncased")
@@ -35,7 +35,7 @@ class MachineLearning:
         result = pipe(str(text))
         value = []
         for x in result:
-            value.append(x)
+            value.append(x['summary_text'])
         return value
 
     def summarize_text(text):

@@ -20,22 +20,11 @@
         };
     });
 
-
     function playWelcomeAudio() {
         speechSynthesis.speak(new SpeechSynthesisUtterance("Hello, this is your browser speaking. What website would you like to surf?"));
 
     }
-    function speechToText() {
-        try {
-            var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            var recognition = new SpeechRecognition();
-        }
-        catch (e) {
-            console.error(e);
-            $('.no-browser-support').show();
-            $('.app').hide();
-        }
-    }
+
     const GetSpeech = () => {
         playWelcomeAudio();
         console.log("clicked microphone");

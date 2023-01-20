@@ -24,7 +24,7 @@ class ScrapWebPage():
         resp = requests.get(webpage)
         html = resp.text
         soup = BeautifulSoup(html, 'lxml')
-        question = 'what is the title'
+        question = 'what is the title of the article'
         title = soup.find('title')
         db.DatabaseHelper.writeToDatabase(str(uuid.uuid4()), webpage, title, title.text, 'title', question)
 
