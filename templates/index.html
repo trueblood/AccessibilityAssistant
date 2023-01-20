@@ -8,14 +8,11 @@
     $(document).ready(function () {
         console.log("ready!");
         document.onkeyup = function (e) {
-            if (e.which == 77) {
-                alert("M key was pressed");
-            } else if (e.ctrlKey && e.which == 66) {
+            if (e.ctrlKey && e.which == 66) {
                 alert("Ctrl + B shortcut combination was pressed");
+                document.getElementById("btnSpeech").click();
             } else if (e.ctrlKey && e.altKey && e.which == 89) {
                 alert("Ctrl + Alt + Y shortcut combination was pressed");
-            } else if (e.ctrlKey && e.altKey && e.shiftKey && e.which == 85) {
-                alert("Ctrl + Alt + Shift + U shortcut combination was pressed");
             }
         };
     });
@@ -55,7 +52,7 @@
         <div class="row">
             <div class="col-md-12">
                 <div style="text-align: center;">
-                    <button onClick="GetSpeech()"><i class="fa-solid fa-microphone fa-10x"></i> </button>
+                    <button id="btnSpeech" onClick="GetSpeech()"><i class="fa-solid fa-microphone fa-10x"></i> </button>
                 </div>
             </div>
         </div>

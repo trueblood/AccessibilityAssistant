@@ -11,9 +11,9 @@ To train a model I used the hugging face trainer object. I did this to fine tune
 
 ## Three different machine learning techniques 
 * Question answering with custom question answering to fine tune the model 
-    * Ask questions about the pargraph or article as a whole 
+    * Ask questions about the paragraph or article as a whole 
 * Text summarization 
-    * To sumize the article or pargraph so the user doesn't have to listen to the whole thing unless they want too 
+    * To summarize the article or paragraph so the user doesn't have to listen to the whole thing unless they want too 
 * Entity recognition 
     * Pick names out of the article 
 

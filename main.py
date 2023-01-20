@@ -137,7 +137,10 @@ def OnPostQuestion(website):
             else:
                 text = "None, see key"
         else:
-            text = "None, see key"
+            url = getFormattedURL(originalwebsite)
+            sourceQuestion = "read the article"
+            context = db.DatabaseHelper.findDataByQuestion_Cleaned(sourceQuestion, url)
+            text = ml.MachineLearning.question_answering(context, originalQuestion)
 
 
 
