@@ -35,3 +35,6 @@ To train a model I used the hugging face trainer object. I did this to fine tune
 * TextAI 
 
  ## How to install and run the program
+* !pip3 install -r requirements.txt
+* export FLASK_APP="main.py"
+* flask run
