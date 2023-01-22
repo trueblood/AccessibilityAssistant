@@ -5,11 +5,25 @@
 
 <head>
     <title>User</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-
     <script type="text/javascript">
+        $(document).ready(function () {
+            console.log("ready!");
+            document.onkeyup = function (e) {
+                if (e.ctrlKey && e.which == 66) {
+                    alert("Ctrl + B shortcut combination was pressed");
+                    document.getElementById("btnSpeech").click();
+                } else if (e.ctrlKey && e.altKey && e.which == 89) {
+                    alert("Ctrl + Alt + Y shortcut combination was pressed");
+                    document.getElementById("playAudio").click();
+                }
+            };
+        });
+        function playQuestionAudio() {
+            speechSynthesis.speak(new SpeechSynthesisUtterance("Hello, this is your browser speaking. What question would you like to ask?"));
+        }
         let TEXTSPEECH = "text";
         const GetSpeech = () => {
+            playQuestionAudio();
             console.log("clicked microphone");
             const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 
@@ -35,10 +49,10 @@
             window.speechSynthesis.speak(msg);
         }
 
-        $( document ).ready(function() {
+        $(document).ready(function () {
             let text = $('#pText').text();
             TEXTSPEECH = text;
-            document.getElementById('playAudio').onclick = function() { speak() };
+            document.getElementById('playAudio').onclick = function () { speak() };
             console.log(text);
         });
     </script>
@@ -52,10 +66,11 @@
             <div class="col-md-12">
                 <div style="text-align: center;">
 
-                    <button onClick="GetSpeech()"><i class="fa-solid fa-microphone fa-10x"></i> </button>
-                    <button id="playAudio" onclick="speak('This is the text')"><i class="fa-solid fa-play fa-10x"></i></button>
-            
-                    </div>
+                    <button id="btnSpeech" onClick="GetSpeech()"><i class="fa-solid fa-microphone fa-10x"></i> </button>
+                    <button id="playAudio" onclick="speak('This is the text')"><i
+                            class="fa-solid fa-play fa-10x"></i></button>
+
+                </div>
             </div>
         </div>
         <div class="row">
@@ -88,10 +103,11 @@
                 <p id="pText">Text is: {{ text }}</p>
             </div>
         </div>
-        <br/>
+        <br />
         <div class="row">
             <div class="col-md-12">
-                <iframe style="width: 100%; height: 600px; border:3px solid black;" src={{ website }} title="description"></iframe>
+                <iframe style="width: 100%; height: 600px; border:3px solid black;" src={{ website }}
+                    title="description"></iframe>
             </div>
         </div>
     </div>
