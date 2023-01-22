@@ -65,11 +65,11 @@ def question(website):
     url = getFormattedURL(website)
    # drpSuccessful =  db.DatabaseHelper.dropDatabaseTable()
    # if drpSuccessful == True:
-   #     sw.ScrapWebPage.scrap_web_page_title(url)
-   #     sw.ScrapWebPage.scrap_web_page_paragraph(url)
-   #     sw.ScrapWebPage.scrap_web_page_header(url)
-   #     sw.ScrapWebPage.scrap_web_page_link(url)
-   #     sw.ScrapWebPage.scrap_web_page_source(url)
+     #   sw.ScrapWebPage.scrap_web_page_title(url)
+    #    sw.ScrapWebPage.scrap_web_page_paragraph(url)
+       # sw.ScrapWebPage.scrap_web_page_header(url)
+      #  sw.ScrapWebPage.scrap_web_page_link(url)
+        #sw.ScrapWebPage.scrap_web_page_source(url)
     form = QuestionForm()
     return render_template('question.html', form=form, website=url)
 
@@ -90,7 +90,7 @@ def OnPostQuestion(website):
                 url = getFormattedURL(originalwebsite)
                 question = "read the article"
                 value = db.DatabaseHelper.findDataByQuestion_Cleaned(question, url)
-                #text = ml.MachineLearning.summarize_text(value)
+                text = ml.MachineLearning.summarize_paragraph(value)
             else:
                 question = "read paragraph " + str(splitString[2])
                 url = getFormattedURL(originalwebsite)
