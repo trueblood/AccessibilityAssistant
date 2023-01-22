@@ -18,7 +18,7 @@ class MachineLearning:
     def question_answering__tuned_model(context, question, data):
         trainer = HFTrainer() 
         model, tokenizer = trainer("distilbert-base-uncased", data, task="question-answering")
-        questions = pipeline("question-answering", model="distilbert-base-uncased")
+        questions = pipeline("question-answering", model=model, tokenizer=tokenizer)
         result =questions(question, context)
         return result.get('answer')
 
@@ -38,6 +38,19 @@ class MachineLearning:
             value.append(x['summary_text'])
         return value
 
+
+
+
+
+
+
+
+
+
+
+
+
+
     def summarize_text(text):
 
         # Pick model
@@ -46,8 +59,8 @@ class MachineLearning:
         # Load pretrained tokenizer
         pegasus_tokenizer = PegasusTokenizer.from_pretrained(model_name)
 
-        example_text = text
-        #example_text = """copyleft.org is a collaborative project to create and disseminate useful information, tutorial material, and new policy ideas regarding all forms of copyleft licensing. This site itself is licensed under a free and open license and has received contributions from experts around the world."""
+        example_text = str(text)
+        example_text = """ and/or other fora provided by copyleft.org may not necessarily reflect the views of the contributors' employers and/or organizations sponsoring the project and/or organizations republishing copyleft.org's materials. Generally speaking, unless stated otherwise, please assume that individuals contribute to copyleft.org in their personal capacity.  """
 
 
         # Define PEGASUS model
@@ -62,8 +75,8 @@ class MachineLearning:
 
         # Decode summarized text
         decoded_summary = pegasus_tokenizer.decode(
-            encoded_summary[0],
-            skip_special_tokens=True
+           encoded_summary[0],
+             skip_special_tokens=True
         )
 
         # Define summarization pipeline 
@@ -71,8 +84,11 @@ class MachineLearning:
             "summarization", 
             model=model_name, 
             tokenizer=pegasus_tokenizer, 
-            framework="pt"
         )
-        summary = summarizer(example_text, min_length=30, max_length=150)
+
+       # result = summarizer(str(text))
+
+        summary = summarizer(example_text, min_length=0, max_length=len(text))
 
         return summary[0]["summary_text"]
+        #return "tesst"
