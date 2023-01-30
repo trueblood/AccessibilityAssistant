@@ -7,7 +7,6 @@ from transformers import pipeline
 class MachineLearning:
     def question_answering(context, question):
         questions = pipeline("question-answering", model="distilbert-base-uncased")
-        #questions = pipeline("question-answering", model="ml6team/distilbart-tos-summarizer-tosdr")
         result =questions(question, context)
         return result.get('answer')
 
