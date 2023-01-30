@@ -1,4 +1,4 @@
-# Accessibility Assistant
+# Accessibility Assistant using Machine Learning
 
 ## About
 This web application analyzes the data on a website and then organizes the data based on html element type. Throws it onto a no sql database, mongo db, and allows me to run queries against the data. The machine learning comes in so that the user can ask questions about the information that is present, Summarize text, or check entities in a paragraph. Then reads the results to the user. 
